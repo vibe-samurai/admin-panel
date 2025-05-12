@@ -1,6 +1,3 @@
-export default function Home() {
-  return (
-
-        <div></div>
-  );
+export default function HomePage() {
+  return <div>ADMIN!!!</div>
 }
