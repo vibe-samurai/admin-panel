@@ -1,0 +1,47 @@
+@forward './../shared/styles/index';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+button,
+select,
+textarea,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  color: inherit;
+}
+
+body {
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-family-primary), sans-serif;
+  line-height: var(--line-height-m);
+  color: var(--Light-100);
+  background-color: var(--Dark-900);
+}
+
+button {
+  all: unset;
+
+  &:disabled {
+    cursor: default;
+  }
+}
