@@ -1,27 +1,11 @@
-import type {Metadata} from 'next'
+import {ApolloProvider} from "@apollo/client";
 
-import React from 'react'
+import client from '@/shared/api/apollo-client';
 
-import './globals.scss'
-
-export const metadata: Metadata = {
-  title: 'Admin Panel',
-  description: 'Admin Panel Next App',
-  icons: {
-    icon: '/favicon.ico',
-  },
-}
-
-export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function App() {
   return (
-    <html lang={'en'}>
-    <body>
-    {children}
-    </body>
-    </html>
-  )
+      <ApolloProvider client={client}>
+        <div>hello</div>
+      </ApolloProvider>
+  );
 }
