@@ -1,0 +1,19 @@
+.card {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 380px;
+  height: max-content;
+  margin: 72px auto;
+  padding: 24px;
+
+  .account-text {
+    margin: 24px 0 6px;
+  }
+}
