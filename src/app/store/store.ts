@@ -2,13 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { paymentPaginationSlice } from '@/entities/PaymentsTable/model/slices/paymentsPaginationSlice'
+import { paymentSlice } from '@/entities/PaymentsTable/model/slices/paymentsSlice'
 import { authSlice } from '@/features/auth/model/slices/authSlice'
 
 export const store = configureStore({
   reducer: {
     [authSlice.reducerPath]: authSlice.reducer,
-    [paymentPaginationSlice.reducerPath]: paymentPaginationSlice.reducer,
+    [paymentSlice.reducerPath]: paymentSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(),
 })
