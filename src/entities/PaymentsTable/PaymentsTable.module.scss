@@ -17,8 +17,13 @@
   
     td,
     th {
+      width: 20%;
       padding: 12px 24px;
     }
+  }
+
+  .headerCell {
+    align-items: center;
   }
 
   .usernameCell {
