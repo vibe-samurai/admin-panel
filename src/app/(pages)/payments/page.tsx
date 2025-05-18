@@ -1,12 +1,7 @@
 'use client'
 
-import { Input } from "@vibe-samurai/visual-ui-kit";
-
-import { PaymentsTable } from "@/entities/PaymentsTable";
+import { PaymentsContent } from "@/entities/PaymentsContent"
 
 export default function Payments() {
-  return <div>
-    <Input />
-    <PaymentsTable/>
-  </div>
+  return <PaymentsContent/>
 }

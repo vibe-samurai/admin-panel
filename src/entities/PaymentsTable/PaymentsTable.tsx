@@ -5,6 +5,7 @@ import Image from 'next/image'
 
 import DefaultAvatar from 'public/icons/defaultAvatar.svg'
 
+import { formatCurrency } from '@/shared/lib/formatCurrency'
 import { formatDate } from '@/shared/lib/formatDate'
 import { formatPaymentMethod } from '@/shared/lib/formatPaymentMethod'
 import { formatSubscriptionType } from '@/shared/lib/formatSubscriptionType'
@@ -37,10 +38,10 @@ export const PaymentsTable = () => {
                 {payments.map(payment => {
                   return (
                     <tr key={payment.id}>
-                    <td> <Image  src={payment.avatars?.[0]?.url ?? DefaultAvatar} width={36} height={36} alt={"user avatar"}/>
+                          <td className={ s.usernameCell}> <Image  src={payment.avatars?.[0]?.url ?? DefaultAvatar} width={36} height={36} alt={"user avatar"}/>
                               {payment.userName}</td>
                       <td>{formatDate(payment.createdAt)}</td>
-                      <td>{payment.amount}$</td>
+                          <td>{payment.amount}{ formatCurrency(payment.currency?? '' )}</td>
                       <td>{formatSubscriptionType(payment.type)}</td>
                       <td>{formatPaymentMethod(payment.paymentMethod)}</td>
                     </tr>

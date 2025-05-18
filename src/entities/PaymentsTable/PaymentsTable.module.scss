@@ -20,6 +20,12 @@
       padding: 12px 24px;
     }
   }
+
+  .usernameCell {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
   
   .pagination {
     display: flex;
