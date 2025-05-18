@@ -5,6 +5,9 @@ import Image from 'next/image'
 
 import DefaultAvatar from 'public/icons/defaultAvatar.svg'
 
+import { formatDate } from '@/shared/lib/formatDate'
+import { formatSubscriptionType } from '@/shared/lib/formatSubscriptionType'
+
 import { useGetPaymentsQuery } from './api/Payments.generated'
 import s from './PaymentsTable.module.scss'
 export const PaymentsTable = () => {
@@ -35,9 +38,9 @@ export const PaymentsTable = () => {
                     <tr key={payment.id}>
                     <td> <Image  src={payment.avatars?.[0]?.url ?? DefaultAvatar} width={36} height={36} alt={"user avatar"}/>
                               {payment.userName}</td>
-                      <td>{(payment.createdAt)}</td>
-                      <td>{(payment.amount)}</td>
-                      <td>{(payment.type)}</td>
+                      <td>{formatDate(payment.createdAt)}</td>
+                      <td>{payment.amount}$</td>
+                      <td>{formatSubscriptionType(payment.type)}</td>
                       <td>{(payment.paymentMethod)}</td>
                     </tr>
                   )
