@@ -1,3 +1,12 @@
-export default function Paymentslist() {
-  return <div>Payments list</div>
+'use client'
+
+import { Input } from "@vibe-samurai/visual-ui-kit";
+
+import { PaymentsTable } from "@/entities/PaymentsTable";
+
+export default function Payments() {
+  return <div>
+    <Input />
+    <PaymentsTable/>
+  </div>
 }
