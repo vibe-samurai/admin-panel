@@ -6,6 +6,7 @@ import Image from 'next/image'
 import DefaultAvatar from 'public/icons/defaultAvatar.svg'
 
 import { formatDate } from '@/shared/lib/formatDate'
+import { formatPaymentMethod } from '@/shared/lib/formatPaymentMethod'
 import { formatSubscriptionType } from '@/shared/lib/formatSubscriptionType'
 
 import { useGetPaymentsQuery } from './api/Payments.generated'
@@ -41,7 +42,7 @@ export const PaymentsTable = () => {
                       <td>{formatDate(payment.createdAt)}</td>
                       <td>{payment.amount}$</td>
                       <td>{formatSubscriptionType(payment.type)}</td>
-                      <td>{(payment.paymentMethod)}</td>
+                      <td>{formatPaymentMethod(payment.paymentMethod)}</td>
                     </tr>
                   )
                 })}
