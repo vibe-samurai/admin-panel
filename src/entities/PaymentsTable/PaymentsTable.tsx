@@ -1,5 +1,7 @@
 'use client'
 
+import type { SortBy } from './model/types/types'
+
 import { Loader, Pagination } from '@vibe-samurai/visual-ui-kit'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -7,6 +9,8 @@ import { useState } from 'react'
 import DefaultAvatar from 'public/icons/defaultAvatar.svg'
 
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
+import { useToggleSort } from '@/features/auth/model/hooks/useToggleSort'
+import { SortButton } from '@/shared/components/SortButton/SortButton'
 import { formatCurrency } from '@/shared/lib/formatCurrency'
 import { formatDate } from '@/shared/lib/formatDate'
 import { formatPaymentMethod } from '@/shared/lib/formatPaymentMethod'
@@ -14,16 +18,30 @@ import { formatSubscriptionType } from '@/shared/lib/formatSubscriptionType'
 
 import { useGetPaymentsQuery } from './api/Payments.generated'
 import { selectOnRowsPerChange } from './model/selectors/selectOnRowsPerPage'
-import { setOnRowsPerPageChange } from './model/slices/paymentsPaginationSlice'
+import { selectSortBy } from './model/selectors/selectSortBy'
+import { selectSortDirection } from './model/selectors/selectSortDicrection'
+import { setOnRowsPerPageChange } from './model/slices/paymentsSlice'
 import s from './PaymentsTable.module.scss'
 export const PaymentsTable = () => {
     const ROWS_PER_PAGE = [8, 25, 100]
+    const [currentPage, setCurrentPage] = useState(1)
+
     const dispatch = useAppDispatch()
     const onRowsPerPageChange = useAppSelector(selectOnRowsPerChange)
-    const [currentPage, setCurrentPage] = useState(1)
-    const { data, loading } = useGetPaymentsQuery({variables: {pageSize: onRowsPerPageChange, pageNumber: currentPage}})
+    const sortBy = useAppSelector(selectSortBy)
+    const sortDirection = useAppSelector(selectSortDirection)
+
+    const { data, loading } = useGetPaymentsQuery({variables: {pageSize: onRowsPerPageChange, pageNumber: currentPage, sortBy, sortDirection}})
     const payments = data?.getPayments.items;
+
     const totalPages = data ? Math.ceil(data.getPayments.totalCount / onRowsPerPageChange) : 1
+
+    const toggleSort = useToggleSort();
+
+    const onSortClickHandler = (field: SortBy) => {
+      toggleSort(field);
+      setCurrentPage(1);
+    };
 
     if (loading) return <Loader />
   
@@ -34,11 +52,11 @@ export const PaymentsTable = () => {
             <table className={s.table}>
               <thead>
                 <tr>
-                  <th>Username</th>
-                  <th>Date added</th>
-                  <th>Amount, $</th>
+                <th className={s.headerCell}> UserName <SortButton field={"userName"} onClick={()=>onSortClickHandler('userName') } /></th>
+                  <th className={ s.headerCell}>Date added <SortButton field={"createdAt"} onClick={()=>onSortClickHandler('createdAt') } /></th>
+                  <th className={ s.headerCell}>Amount, $ <SortButton field={"amount"} onClick={()=>onSortClickHandler('amount') } /></th>
                   <th>Subscription</th>
-                  <th>Payment Method</th>
+                  <th className={ s.headerCell}>Payment Method <SortButton field={"paymentMethod"} onClick={()=>onSortClickHandler('paymentMethod') } /></th>
                 </tr>
               </thead>
               <tbody>
