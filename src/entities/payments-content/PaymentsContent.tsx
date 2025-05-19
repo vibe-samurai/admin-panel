@@ -1,6 +1,6 @@
 'use client'
 
-import { SearchInput } from '@/shared/components/SearchInput/SearchInput';
+import { SearchInput } from '@/features/search-input/SearchInput';
 
 import s from './PaymentsContent.module.scss'
 import { PaymentsTable } from '../payments-table/PaymentsTable';
