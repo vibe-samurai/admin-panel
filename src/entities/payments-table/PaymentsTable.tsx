@@ -10,7 +10,9 @@ import DefaultAvatar from 'public/icons/defaultAvatar.svg'
 
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 import { useToggleSort } from '@/features/auth/model/hooks/useToggleSort'
+import { selectSearchValue } from '@/features/search-input/model/selectors/selectSearch'
 import { SortButton } from '@/shared/components/SortButton/SortButton'
+import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue'
 import { formatCurrency } from '@/shared/lib/formatCurrency'
 import { formatDate } from '@/shared/lib/formatDate'
 import { formatPaymentMethod } from '@/shared/lib/formatPaymentMethod'
@@ -31,9 +33,11 @@ export const PaymentsTable = () => {
     const dispatch = useAppDispatch()
     const onRowsPerPageChange = useAppSelector(selectOnRowsPerChange)
     const sortBy = useAppSelector(selectSortBy)
-    const sortDirection = useAppSelector(selectSortDirection)
-
-    const { data, loading } = useGetPaymentsQuery({variables: {pageSize: onRowsPerPageChange, pageNumber: currentPage, sortBy, sortDirection}})
+  const sortDirection = useAppSelector(selectSortDirection)
+  
+  const search = useAppSelector(selectSearchValue);
+  const debouncedSearch = useDebouncedValue(search, 400);
+    const { data, loading } = useGetPaymentsQuery({variables: {pageSize: onRowsPerPageChange, pageNumber: currentPage, sortBy, sortDirection, searchTerm: debouncedSearch}})
     const payments = data?.getPayments.items;
 
     const totalPages = data ? Math.ceil(data.getPayments.totalCount / onRowsPerPageChange) : 1

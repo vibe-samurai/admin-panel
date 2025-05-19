@@ -7,7 +7,7 @@ import { PaymentsTable } from '../payments-table/PaymentsTable';
 export const PaymentsContent = () => {
     return (
         <div className={s.payments}>
-            {/* <SearchInput />             */}
+            <SearchInput />            
             <PaymentsTable/>
           </div>
     );

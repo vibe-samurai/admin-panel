@@ -1,22 +1,25 @@
 import { Input, SearchIcon } from '@vibe-samurai/visual-ui-kit';
-import { useEffect, useState } from 'react';
 
+import { useAppDispatch, useAppSelector } from '@/app/store/store';
+import { selectSearchValue } from '@/features/search-input/model/selectors/selectSearch';
+import { setSearchValue } from '@/features/search-input/model/slices/searchSlice';
 import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue';
 
 import s from './SearchInput.module.scss'
 
-type Props = {
-    onDebouncedChange: (value: string)=>void
-}
 
-export const SearchInput = ({ onDebouncedChange}: Props) => {
-    const [search, setSearch] = useState('')
-    const debouncedSearch = useDebouncedValue(search, 400)
+export const SearchInput = () => {
+    const dispatch = useAppDispatch()
+    const searchValue = useAppSelector(selectSearchValue)
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setSearchValue(e.target.value));
+      };
 
     return (
         <div className={s.wrapper}>
             <SearchIcon className={ s.icon} />
-        <Input type={"text"} placeholder={"Search"} className={s.input} value={search} onChange={(e)=>{setSearch(e.target.value)}} />
+        <Input type={"text"} placeholder={"Search"} className={s.input} value={searchValue} onChange={onChange} />
        </div>
     );
 };
