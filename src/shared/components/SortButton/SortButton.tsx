@@ -1,7 +1,7 @@
 import { useAppSelector } from '@/app/store/store';
-import { selectSortBy } from '@/entities/PaymentsTable/model/selectors/selectSortBy';
-import { selectSortDirection } from '@/entities/PaymentsTable/model/selectors/selectSortDicrection';
-import type { SortBy } from '@/entities/PaymentsTable/model/types/types';
+import { selectSortBy } from '@/entities/payments-table/model/selectors/selectSortBy';
+import { selectSortDirection } from '@/entities/payments-table/model/selectors/selectSortDicrection';
+import type { SortBy } from '@/entities/payments-table/model/types/types';
 
 import s from './SortButton.module.scss'
 type Props = {
@@ -17,7 +17,6 @@ export const SortButton = ({ field, onClick }: Props) => {
 
     const renderIcon = () => {
       if (!isActive || sortDirection === undefined) {
-      // Default icon (inactive)
       return (
         <svg width={"8"} height={"12"} viewBox={"0 0 8 12"} fill={"none"} xmlns={"http://www.w3.org/2000/svg"}>
           <path d={"M4 0L7.4641 4.5H0.535898L4 0Z"} fill={"#4C4C4C"} />

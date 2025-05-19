@@ -1,0 +1,19 @@
+.wrapper { 
+    position: relative; 
+    display: inline-block;
+}
+
+.input {
+   input {
+    padding-left: 42px;
+   }
+}
+
+.icon {
+    pointer-events: none;
+    position: absolute;
+    z-index: 10;
+    top: 50%;  
+    left: 12px;
+    transform: translateY(-50%);
+}
