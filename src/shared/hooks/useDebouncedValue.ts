@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 
 export const useDebouncedEffect = (callback: () => void, deps: unknown[], delay: number) => {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (timeoutRef.current) {
@@ -15,5 +15,5 @@ export const useDebouncedEffect = (callback: () => void, deps: unknown[], delay:
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [...deps, delay]);
+  }, [delay, callback]);
 };
