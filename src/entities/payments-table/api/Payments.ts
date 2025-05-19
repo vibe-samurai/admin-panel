@@ -1,7 +1,13 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const GET_PAYMENTS_WITH_USERS = gql`
-  query GetPayments($pageSize: Int = 10, $pageNumber: Int = 1, $sortBy: String = "createdAt", $sortDirection: SortDirection = desc, $searchTerm: String) {
+  query GetPayments(
+    $pageSize: Int = 10
+    $pageNumber: Int = 1
+    $sortBy: String = "createdAt"
+    $sortDirection: SortDirection = desc
+    $searchTerm: String
+  ) {
     getPayments(
       pageSize: $pageSize
       pageNumber: $pageNumber
@@ -27,4 +33,4 @@ export const GET_PAYMENTS_WITH_USERS = gql`
       }
     }
   }
-`;
+`
