@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { paymentSlice } from '@/entities/PaymentsTable/model/slices/paymentsSlice'
+import { paymentSlice } from '@/entities/payments-table/model/slices/paymentsSlice'
 import { authSlice } from '@/features/auth/model/slices/authSlice'
 
 export const store = configureStore({

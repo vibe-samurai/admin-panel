@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
-import { selectSortBy } from "@/entities/PaymentsTable/model/selectors/selectSortBy";
-import { selectSortDirection } from "@/entities/PaymentsTable/model/selectors/selectSortDicrection";
-import { setSortDirection , setSortBy } from "@/entities/PaymentsTable/model/slices/paymentsSlice";
-import type { SortBy } from "@/entities/PaymentsTable/model/types/types";
+import { selectSortBy } from "@/entities/payments-table/model/selectors/selectSortBy";
+import { selectSortDirection } from "@/entities/payments-table/model/selectors/selectSortDicrection";
+import { setSortDirection , setSortBy } from "@/entities/payments-table/model/slices/paymentsSlice";
+import type { SortBy } from "@/entities/payments-table/model/types/types";
 
 export const useToggleSort = () => {
   const sortBy = useAppSelector(selectSortBy);

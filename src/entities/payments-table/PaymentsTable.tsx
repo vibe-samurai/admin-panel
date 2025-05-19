@@ -22,6 +22,8 @@ import { selectSortBy } from './model/selectors/selectSortBy'
 import { selectSortDirection } from './model/selectors/selectSortDicrection'
 import { setOnRowsPerPageChange } from './model/slices/paymentsSlice'
 import s from './PaymentsTable.module.scss'
+
+
 export const PaymentsTable = () => {
     const ROWS_PER_PAGE = [8, 25, 100]
     const [currentPage, setCurrentPage] = useState(1)

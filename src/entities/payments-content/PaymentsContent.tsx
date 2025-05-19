@@ -1,13 +1,13 @@
 'use client'
 
-import { Input } from '@vibe-samurai/visual-ui-kit';
+import { SearchInput } from '@/shared/components/SearchInput/SearchInput';
 
-import { PaymentsTable } from '../PaymentsTable';
 import s from './PaymentsContent.module.scss'
+import { PaymentsTable } from '../payments-table/PaymentsTable';
 export const PaymentsContent = () => {
     return (
         <div className={s.payments}>
-            <Input placeholder={"Search"} />
+            {/* <SearchInput />             */}
             <PaymentsTable/>
           </div>
     );
