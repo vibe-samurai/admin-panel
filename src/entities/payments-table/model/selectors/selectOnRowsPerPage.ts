@@ -1,3 +1,3 @@
 import type { RootState } from "@/app/store/store";
 
-export const selectOnRowsPerChange = (state: RootState) => state.paymentPagination.onRowsPerPageChange
+export const selectOnRowsPerPage = (state: RootState) => state.paymentPagination.onRowsPerPage

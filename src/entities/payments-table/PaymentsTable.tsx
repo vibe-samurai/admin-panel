@@ -9,7 +9,7 @@ import { useState } from 'react'
 import DefaultAvatar from 'public/icons/defaultAvatar.svg'
 
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
-import { useToggleSort } from '@/features/auth/model/hooks/useToggleSort'
+import { useToggleSort } from '@/entities/payments-table/model/hooks/useToggleSort'
 import { selectSearchValue } from '@/features/search-input/model/selectors/selectSearch'
 import { SortButton } from '@/shared/components/SortButton/SortButton'
 import { formatCurrency } from '@/shared/lib/formatCurrency'
@@ -18,7 +18,7 @@ import { formatPaymentMethod } from '@/shared/lib/formatPaymentMethod'
 import { formatSubscriptionType } from '@/shared/lib/formatSubscriptionType'
 
 import { useGetPaymentsQuery } from './api/Payments.generated'
-import { selectOnRowsPerChange } from './model/selectors/selectOnRowsPerPage'
+import { selectOnRowsPerPage } from './model/selectors/selectOnRowsPerPage'
 import { selectSortBy } from './model/selectors/selectSortBy'
 import { selectSortDirection } from './model/selectors/selectSortDicrection'
 import { setOnRowsPerPageChange } from './model/slices/paymentsSlice'
@@ -30,15 +30,15 @@ export const PaymentsTable = () => {
     const [currentPage, setCurrentPage] = useState(1)
 
     const dispatch = useAppDispatch()
-    const onRowsPerPageChange = useAppSelector(selectOnRowsPerChange)
+    const onRowsPerPage = useAppSelector(selectOnRowsPerPage)
     const sortBy = useAppSelector(selectSortBy)
   const sortDirection = useAppSelector(selectSortDirection)
   
   const searchValue = useAppSelector(selectSearchValue);
-    const { data, loading } = useGetPaymentsQuery({variables: {pageSize: onRowsPerPageChange, pageNumber: currentPage, sortBy, sortDirection, searchTerm: searchValue}})
+    const { data, loading } = useGetPaymentsQuery({variables: {pageSize: onRowsPerPage, pageNumber: currentPage, sortBy, sortDirection, searchTerm: searchValue}})
     const payments = data?.getPayments.items;
 
-    const totalPages = data ? Math.ceil(data.getPayments.totalCount / onRowsPerPageChange) : 1
+    const totalPages = data ? Math.ceil(data.getPayments.totalCount / onRowsPerPage) : 1
 
     const toggleSort = useToggleSort();
 
@@ -83,7 +83,7 @@ export const PaymentsTable = () => {
                 currentPage={currentPage}
                 onPageChange={setCurrentPage}
                             totalPages={totalPages}
-                rowsPerPage={onRowsPerPageChange}
+                // rowsPerPage={onRowsPerPage}
                 rowsPerPageOptions={ROWS_PER_PAGE}
                 onRowsPerPageChange={newRows => {
                     dispatch(setOnRowsPerPageChange(newRows))

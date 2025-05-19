@@ -7,12 +7,12 @@ import type { SortDirection } from "@/shared/api/types";
 
 
 type InitialState = {
-    onRowsPerPageChange: 8 | 25 | 100
+    onRowsPerPage: 8 | 25 | 100
     sortBy: SortBy | undefined
     sortDirection: SortDirection| undefined
 }
 const initialState:  InitialState = {
-    onRowsPerPageChange: 8,
+    onRowsPerPage: 8,
     sortBy: undefined,
     sortDirection: undefined
 }
@@ -22,7 +22,7 @@ const paymentSlice = createSlice({
     initialState,
     reducers: {
         setOnRowsPerPageChange: (state, action) => {
-            state.onRowsPerPageChange = action.payload
+            state.onRowsPerPage = action.payload
         },
         setSortBy: (state, action) => {
             state.sortBy = action.payload
