@@ -17,7 +17,7 @@
     "@apollo/client": "^3.13.8",
     "@hookform/resolvers": "^4.0.0",
     "@reduxjs/toolkit": "^2.5.1",
-    "@vibe-samurai/visual-ui-kit": "^0.0.35",
+    "@vibe-samurai/visual-ui-kit": "^0.0.36",
     "graphql": "^16.11.0",
     "next": "15.2.4",
     "react": "^19.0.0",

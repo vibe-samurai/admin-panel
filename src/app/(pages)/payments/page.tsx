@@ -1,3 +1,7 @@
-export default function Paymentslist() {
-  return <div>Payments list</div>
+'use client'
+
+import { PaymentsContent } from '@/entities/payments-content'
+
+export default function Payments() {
+  return <PaymentsContent />
 }
