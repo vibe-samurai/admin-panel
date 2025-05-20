@@ -118,7 +118,7 @@ export const PaymentsTable = () => {
               currentPage={currentPage}
               onPageChange={setCurrentPage}
               totalPages={totalPages}
-              // rowsPerPage={onRowsPerPage}
+              rowsPerPage={onRowsPerPage}
               rowsPerPageOptions={ROWS_PER_PAGE}
               onRowsPerPageChange={newRows => {
                 dispatch(setOnRowsPerPageChange(newRows))
