@@ -1,0 +1,38 @@
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownMenu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: max-content;
+  background-color: var(--Dark-500);
+  border: 1px solid var(--Dark-100);
+  border-radius: 2px;
+  z-index: 100;
+}
+
+.text {
+  padding-left: 12px;
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background-color: var(--Dark-100);
+  }
+
+}
