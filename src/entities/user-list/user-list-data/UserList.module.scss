@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap:24px;
+}
+
+.searchrSelect {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 100px;
+}
+
+.search {
+  background-color: #1f1f1f;
+  color: #fff;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  color: #888;
+  text-align: left;
+  padding: 12px;
+}
+
+.table td {
+  padding: 12px;
+  border-top: 1px solid #333;
+}
+
+.loading {
+  color: #aaa;
+}
