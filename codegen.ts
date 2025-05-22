@@ -8,6 +8,11 @@ const config: CodegenConfig = {
   generates: {
     'src/shared/api/types.ts': {
       plugins: ['typescript'],
+      config: {
+        scalars: {
+          DateTime: 'string',
+        },
+      },
     },
 
     'src/': {
@@ -23,6 +28,9 @@ const config: CodegenConfig = {
         withComponent: false,
         preResolveTypes: true,
         dedupeOperationSuffix: true,
+        scalars: {
+          DateTime: 'string',
+        },
       },
     },
   },
