@@ -1,0 +1,33 @@
+.button {
+  cursor: pointer;
+  width: 140px;
+  margin-bottom: 24px;
+}
+
+.userInfoHeader {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 19px;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userNameBlock {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.metaInfo {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 29px;
+}
+
+.column {
+  width: 100%;
+  max-width: 172px;
+}
