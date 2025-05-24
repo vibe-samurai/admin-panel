@@ -1,29 +1,39 @@
 'use client'
 
+import { Alertpopup, Loader } from '@vibe-samurai/visual-ui-kit'
+import Image from 'next/image'
+import React from 'react'
+
 import { useGetUserPhotosQuery } from '@/entities/user/api/getUserPhotos.generated'
+import { useRequiredUserId } from '@/shared/hooks/useRequiredUserId'
 
 import s from './UserPhotos.module.css'
 
-type Props = {
-  userId: string
-}
-
-export default function UserPhotos({ userId }: Props) {
+export default function UserPhotos() {
   const { data, loading, error } = useGetUserPhotosQuery({
     variables: {
-      userId: Number(userId),
+      userId: useRequiredUserId(),
       endCursorId: null,
     },
   })
 
-  if (loading) return <div>Loading photos...</div>
-  if (error) return <div>Error: {error.message}</div>
+  if (loading) return <Loader />
 
   return (
-    <div className={s.photosContainer}>
-      {data?.getPostsByUser?.items?.map(photo => (
-        <img key={photo.id} src={photo.url} alt={'User photo'} width={228} />
-      ))}
-    </div>
+    <>
+      <div className={s.photosContainer}>
+        {data?.getPostsByUser?.items?.map(photo => (
+          <Image
+            key={photo.id}
+            src={photo.url as string}
+            width={228}
+            height={228}
+            alt={'#'}
+            priority
+          />
+        ))}
+      </div>
+      {error && <Alertpopup alertType={'error'} message={error.message} duration={5000} />}
+    </>
   )
 }

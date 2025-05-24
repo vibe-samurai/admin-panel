@@ -1,65 +1,81 @@
 'use client'
 
+import {
+  Alertpopup,
+  type Column,
+  Loader,
+  Pagination,
+  Table,
+  TableHeader,
+} from '@vibe-samurai/visual-ui-kit'
+import React, { useState } from 'react'
+
 import { useGetPaymentsByUserQuery } from '@/entities/user/api/getUserPayments.generated'
+import { useRequiredUserId } from '@/shared/hooks/useRequiredUserId'
+import { formatDate } from '@/shared/lib/formatDate'
+import { formatPaymentMethod } from '@/shared/lib/formatPaymentMethod'
+import { formatSubscriptionType } from '@/shared/lib/formatSubscriptionType'
 
-type Props = {
-  userId: string
-}
+import s from './UserPayments.module.css'
 
-const formatDate = (dateStr: string | null | undefined) =>
-  dateStr ? new Date(dateStr).toLocaleDateString('ru-RU') : '—'
+const ROWS_PER_PAGE = [8, 25, 100]
 
-const formatSubscriptionType = (type: string | null | undefined) => {
-  switch (type) {
-    case 'DAY':
-      return '1 day'
-    case 'WEEKLY':
-      return '7 day'
-    case 'MONTHLY':
-      return '30 day'
-    default:
-      return '—'
-  }
-}
+const columns: Column[] = [
+  { key: 'dateOfPayment', title: 'Date of Payment' },
+  { key: 'endDate', title: 'End date of subscription' },
+  { key: 'price', title: 'Amount, $' },
+  { key: 'type', title: 'Subscription Type' },
+  { key: 'paymentType', title: 'Payment Type' },
+]
 
-export default function UserPayments({ userId }: Props) {
+export default function UserPayments() {
+  const [currentPage, setCurrentPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0])
+
+  const userId = useRequiredUserId()
   const { data, loading, error } = useGetPaymentsByUserQuery({
     variables: {
-      userId: Number(userId),
-      pageNumber: 1,
-      pageSize: 10,
+      userId,
+      pageNumber: currentPage,
+      pageSize: rowsPerPage,
     },
   })
 
-  if (loading) return <p>Loading payments...</p>
-  if (error) return <p>Error: {error.message}</p>
+  if (loading) return <Loader />
 
   const payments = data?.getPaymentsByUser.items || []
+  const totalCount = data?.getPaymentsByUser.totalCount || 0
+  const totalPages = Math.ceil(totalCount / rowsPerPage)
 
   return (
-    <div>
-      <table>
-        <thead style={{ background: '#1e1e1e' }}>
-          <tr>
-            <th style={{ padding: '12px' }}>Date of Payment</th>
-            <th style={{ padding: '12px' }}>End date of subscription</th>
-            <th style={{ padding: '12px' }}>Amount, $</th>
-            <th style={{ padding: '12px' }}>Subscription Type</th>
-            <th style={{ padding: '12px' }}>Payment Type</th>
-          </tr>
-        </thead>
-        <tbody>
+    <>
+      <Table.Root className={s.tableRoot}>
+        <TableHeader columns={columns} />
+        <Table.Body>
           {payments.map(payment => (
-            <tr key={payment.id}>
-              <td style={{ padding: '12px' }}>{formatDate(payment.dateOfPayment)}</td>
-              <td style={{ padding: '12px' }}>{formatDate(payment.endDate)}</td>
-              <td style={{ padding: '12px' }}>${payment.price}</td>
-              <td style={{ padding: '12px' }}>{formatSubscriptionType(payment.type)}</td>
-              <td style={{ padding: '12px' }}>{payment.paymentType}</td>
-            </tr>
+            <Table.Row key={payment.id} className={s.tableRow}>
+              <Table.Cell>{formatDate(payment.dateOfPayment)}</Table.Cell>
+              <Table.Cell>{formatDate(payment.endDate)}</Table.Cell>
+              <Table.Cell>${payment.price}</Table.Cell>
+              <Table.Cell>{formatSubscriptionType(payment.type)}</Table.Cell>
+              <Table.Cell>{formatPaymentMethod(payment.paymentType)}</Table.Cell>
+            </Table.Row>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </Table.Body>
+      </Table.Root>
+
+      <div className={s.pagination}>
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={setRowsPerPage}
+          rowsPerPageOptions={ROWS_PER_PAGE}
+          totalPages={totalPages}
+        />
+      </div>
+
+      {error && <Alertpopup alertType={'error'} message={error.message} duration={5000} />}
+    </>
   )
 }

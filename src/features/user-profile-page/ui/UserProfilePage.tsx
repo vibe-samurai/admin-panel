@@ -1,4 +1,3 @@
-// users/1072 | 1038
 'use client'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@vibe-samurai/visual-ui-kit'
@@ -10,10 +9,6 @@ import UserPayments from '@/features/user-profile-page/ui/user-payments/UserPaym
 import UserPhotos from '@/features/user-profile-page/ui/user-photos/UserPhotos'
 
 import UserFollowers from './user-followers/UserFollowers'
-
-type Props = {
-  userId: string
-}
 
 const TAB_MAP = {
   photos: 'uploaded-photos',
@@ -31,7 +26,7 @@ const tabs = [
 
 type TabPart = keyof typeof TAB_MAP
 
-export default function UserProfilePage({ userId }: Props) {
+export default function UserProfilePage() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -52,14 +47,14 @@ export default function UserProfilePage({ userId }: Props) {
   const renderActiveSection = () => {
     switch (activeTab) {
       case 'payments':
-        return <UserPayments userId={userId} />
+        return <UserPayments />
       case 'followers':
-        return <UserFollowers userId={userId} />
+        return <UserFollowers />
       case 'following':
-        return <UserFollowing userId={userId} />
+        return <UserFollowing />
       case 'uploaded-photos':
       default:
-        return <UserPhotos userId={userId} />
+        return <UserPhotos />
     }
   }
 

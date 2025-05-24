@@ -41,6 +41,7 @@ export const UserProfileHeader = ({ user }: Props) => {
           height={60}
           className={s.avatar}
           onError={() => setImgSrc(fallbackUrl)}
+          priority
         />
 
         <div className={s.userNameBlock}>
