@@ -64,21 +64,20 @@ export const PaymentsTable = () => {
             <thead>
               <tr>
                 <th className={s.headerCell}>
-                  {' '}
-                  UserName{' '}
+                  UserName
                   <SortButton field={'userName'} onClick={() => onSortClickHandler('userName')} />
                 </th>
                 <th className={s.headerCell}>
-                  Date added{' '}
+                  Date added
                   <SortButton field={'createdAt'} onClick={() => onSortClickHandler('createdAt')} />
                 </th>
                 <th className={s.headerCell}>
-                  Amount, ${' '}
+                  Amount, $
                   <SortButton field={'amount'} onClick={() => onSortClickHandler('amount')} />
                 </th>
                 <th>Subscription</th>
                 <th className={s.headerCell}>
-                  Payment Method{' '}
+                  Payment Method
                   <SortButton
                     field={'paymentMethod'}
                     onClick={() => onSortClickHandler('paymentMethod')}
@@ -91,7 +90,6 @@ export const PaymentsTable = () => {
                 return (
                   <tr key={payment.id}>
                     <td className={s.usernameCell}>
-                      {' '}
                       <Image
                         style={{ borderRadius: '50%' }}
                         src={payment.avatars?.[0]?.url ?? DefaultAvatar}

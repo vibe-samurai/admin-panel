@@ -32,10 +32,9 @@ export default function UserPayments() {
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0])
 
-  const userId = useRequiredUserId()
   const { data, loading, error } = useGetPaymentsByUserQuery({
     variables: {
-      userId,
+      userId: useRequiredUserId(),
       pageNumber: currentPage,
       pageSize: rowsPerPage,
     },
@@ -49,31 +48,37 @@ export default function UserPayments() {
 
   return (
     <>
-      <Table.Root className={s.tableRoot}>
-        <TableHeader columns={columns} />
-        <Table.Body>
-          {payments.map(payment => (
-            <Table.Row key={payment.id} className={s.tableRow}>
-              <Table.Cell>{formatDate(payment.dateOfPayment)}</Table.Cell>
-              <Table.Cell>{formatDate(payment.endDate)}</Table.Cell>
-              <Table.Cell>${payment.price}</Table.Cell>
-              <Table.Cell>{formatSubscriptionType(payment.type)}</Table.Cell>
-              <Table.Cell>{formatPaymentMethod(payment.paymentType)}</Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+      {payments.length ? (
+        <>
+          <Table.Root className={s.tableRoot}>
+            <TableHeader columns={columns} />
+            <Table.Body>
+              {payments.map(payment => (
+                <Table.Row key={payment.id} className={s.tableRow}>
+                  <Table.Cell>{formatDate(payment.dateOfPayment)}</Table.Cell>
+                  <Table.Cell>{formatDate(payment.endDate)}</Table.Cell>
+                  <Table.Cell>${payment.price}</Table.Cell>
+                  <Table.Cell>{formatSubscriptionType(payment.type)}</Table.Cell>
+                  <Table.Cell>{formatPaymentMethod(payment.paymentType)}</Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
 
-      <div className={s.pagination}>
-        <Pagination
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={setRowsPerPage}
-          rowsPerPageOptions={ROWS_PER_PAGE}
-          totalPages={totalPages}
-        />
-      </div>
+          <div className={s.pagination}>
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={setRowsPerPage}
+              rowsPerPageOptions={ROWS_PER_PAGE}
+              totalPages={totalPages}
+            />
+          </div>
+        </>
+      ) : (
+        <div>Платежей пока нет</div>
+      )}
 
       {error && <Alertpopup alertType={'error'} message={error.message} duration={5000} />}
     </>

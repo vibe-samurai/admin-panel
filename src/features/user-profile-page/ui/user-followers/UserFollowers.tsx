@@ -1,59 +1,90 @@
 'use client'
 
-import { Alertpopup, Loader } from '@vibe-samurai/visual-ui-kit'
+import {
+  Alertpopup,
+  type Column,
+  Loader,
+  Pagination,
+  Table,
+  TableHeader,
+} from '@vibe-samurai/visual-ui-kit'
+import React, { useState } from 'react'
 
 import { useGetFollowersQuery } from '@/entities/user/api/getUserFollowers.generated'
 import { useRequiredUserId } from '@/shared/hooks/useRequiredUserId'
+import { formatDate } from '@/shared/lib/formatDate'
 
-const formatDate = (dateStr: string | null | undefined) =>
-  dateStr ? new Date(dateStr).toLocaleDateString('ru-RU') : '—'
+import s from './UserFollowers.module.css'
+
+const ROWS_PER_PAGE = [8, 25, 100]
+
+const columns: Column[] = [
+  { key: 'userId', title: 'User ID' },
+  { key: 'userName', title: 'Username' },
+  { key: 'profileLink', title: 'Profile link' },
+  { key: 'subscriptionDate', title: 'Subscription Date' },
+]
 
 export default function UserFollowers() {
+  const [currentPage, setCurrentPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE[0])
+
   const { data, loading, error } = useGetFollowersQuery({
     variables: {
       userId: useRequiredUserId(),
-      pageNumber: 1,
-      pageSize: 100,
+      pageNumber: currentPage,
+      pageSize: rowsPerPage,
     },
   })
 
   if (loading) return <Loader />
 
   const followers = data?.getFollowers.items || []
+  const totalCount = data?.getFollowers.totalCount || 0
+  const totalPages = Math.max(1, Math.ceil(totalCount / rowsPerPage))
 
   return (
     <>
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', color: '#fff' }}>
-          <thead style={{ background: '#1e1e1e', textAlign: 'left' }}>
-            <tr>
-              <th style={{ padding: '12px' }}>User ID</th>
-              <th style={{ padding: '12px' }}>Username</th>
-              <th style={{ padding: '12px' }}>Profile link</th>
-              <th style={{ padding: '12px' }}>Subscription Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {followers.map(follower => (
-              <tr key={follower.id} style={{ borderTop: '1px solid #333' }}>
-                <td style={{ padding: '12px' }}>{follower.userId}</td>
-                <td style={{ padding: '12px' }}>{follower.userName}</td>
-                <td style={{ padding: '12px' }}>
-                  <a
-                    href={`/${follower.userName}`}
-                    target={'_blank'}
-                    rel={'noopener noreferrer'}
-                    style={{ color: '#4c9aff', textDecoration: 'underline' }}
-                  >
-                    {follower.userName}
-                  </a>
-                </td>
-                <td style={{ padding: '12px' }}>{formatDate(follower.createdAt)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {followers.length ? (
+        <>
+          <Table.Root className={s.tableRoot}>
+            <TableHeader columns={columns} />
+            <Table.Body>
+              {followers.map(follower => (
+                <Table.Row key={follower.id} className={s.tableRow}>
+                  <Table.Cell>{follower.userId}</Table.Cell>
+                  <Table.Cell>{follower.userName}</Table.Cell>
+                  <Table.Cell className={s.tableCell}>
+                    <a
+                      href={`/users/${follower.userId}`}
+                      target={'_blank'}
+                      rel={'noopener noreferrer'}
+                      title={`Go to ${follower.userName} profile`}
+                    >
+                      {follower.userName}
+                    </a>
+                  </Table.Cell>
+                  <Table.Cell>{formatDate(follower.createdAt)}</Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+
+          <div className={s.pagination}>
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={setRowsPerPage}
+              rowsPerPageOptions={ROWS_PER_PAGE}
+              totalPages={totalPages}
+            />
+          </div>
+        </>
+      ) : (
+        <div>Подписчиков пока нет</div>
+      )}
+
       {error && <Alertpopup alertType={'error'} message={error.message} duration={5000} />}
     </>
   )
