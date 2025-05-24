@@ -1,1 +1,1 @@
-export type SortBy = 'userName' | 'createdAt' | 'amount' | 'paymentMethod'
+export type SortBy = 'userName' | 'createdAt' | 'amount' | 'paymentMethod' | 'subscriptionDate'

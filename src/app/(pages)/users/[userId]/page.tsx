@@ -1,9 +1,7 @@
 'use client'
 
-import { useParams } from 'next/navigation'
+import UserProfilePage from '@/features/user-profile-page/ui/UserProfilePage'
 
-export default function UserPage() {
-  const { userId } = useParams()
-
-  return <div>User ID: {userId}</div>
+export default function Page() {
+  return <UserProfilePage />
 }

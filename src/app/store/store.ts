@@ -3,9 +3,10 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { paymentSlice } from '@/entities/payments-table/model/slices/paymentsSlice'
+import { userSlice } from '@/entities/user/model/slices/userSlice'
+import { usersSlice } from '@/entities/user-list/model/slices/userSlices'
 import { authSlice } from '@/features/auth/model/slices/authSlice'
 import { searchSlice } from '@/features/search-input/model/slices/searchSlice'
-import { usersSlice} from '@/entities/user-list/model/slices/userSlices'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [paymentSlice.reducerPath]: paymentSlice.reducer,
     [searchSlice.reducerPath]: searchSlice.reducer,
     [usersSlice.reducerPath]: usersSlice.reducer,
+    [userSlice.reducerPath]: userSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(),
 })

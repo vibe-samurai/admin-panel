@@ -1,0 +1,17 @@
+.tableRoot {
+  margin-bottom: 36px;
+}
+
+.tableRow {
+  td {
+    padding: 12px 24px;
+  }
+}
+
+.tableCell {
+  text-decoration: underline;
+}
+
+.pagination {
+  display: flex;
+}

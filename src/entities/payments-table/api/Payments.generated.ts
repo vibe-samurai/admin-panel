@@ -1,7 +1,9 @@
+
 import type * as Types from '../../../shared/api/types'
 
-import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
+import { gql } from '@apollo/client'
+
 
 const defaultOptions = {} as const
 
@@ -28,7 +30,7 @@ export type GetPaymentsQuery = {
       paymentMethod: Types.PaymentMethod
       amount?: number | null
       currency?: Types.CurrencyType | null
-      createdAt?: any | null
+      createdAt?: string | null
       type: Types.SubscriptionType
       avatars?: Array<{ __typename?: 'Avatar'; url?: string | null }> | null
     }>
@@ -97,6 +99,7 @@ export function useGetPaymentsQuery(
 
   return Apollo.useQuery<GetPaymentsQuery, GetPaymentsQueryVariables>(GetPaymentsDocument, options)
 }
+
 export function useGetPaymentsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetPaymentsQuery, GetPaymentsQueryVariables>
 ) {
@@ -107,6 +110,7 @@ export function useGetPaymentsLazyQuery(
     options
   )
 }
+
 export function useGetPaymentsSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
@@ -120,6 +124,7 @@ export function useGetPaymentsSuspenseQuery(
     options
   )
 }
+
 export type GetPaymentsQueryHookResult = ReturnType<typeof useGetPaymentsQuery>
 export type GetPaymentsLazyQueryHookResult = ReturnType<typeof useGetPaymentsLazyQuery>
 export type GetPaymentsSuspenseQueryHookResult = ReturnType<typeof useGetPaymentsSuspenseQuery>

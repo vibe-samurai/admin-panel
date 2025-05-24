@@ -1,10 +1,12 @@
-export const formatPaymentMethod = (method: string) => {
+export const formatPaymentMethod = (method: string | null | undefined): string => {
   switch (method) {
-    case 'STRIPE':
-      return 'Stripe'
+    case 'CREDIT_CARD':
+      return 'Credit Card'
     case 'PAYPAL':
       return 'PayPal'
+    case 'STRIPE':
+      return 'Stripe'
     default:
-      break
+      return '—'
   }
 }
